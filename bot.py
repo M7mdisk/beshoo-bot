@@ -20,6 +20,13 @@ def handle_command(command,args):
         answer = random.choice(choices)
         return f"You got {answer}"
 
+    if command == "guess":
+        number = random.randint(0, 10)
+        args == number
+        return f"i was thinking of {number}"
+        
+        
+
 
 @client.event
 async def on_ready():
@@ -28,9 +35,7 @@ async def on_ready():
     #         break
 
     print(
-        f'{client.user} has connected to the following Guild:\n'
-        f"{guild.name}(id: {guild.id})"
-    )
+        f'{client.user} has connected')
     # await message.channel.send("I am online!")
 
 
@@ -49,5 +54,7 @@ async def on_message(message):
         print(command,args)
         response = handle_command(command,args)
         await message.channel.send(response)
+
+        
 
 client.run(TOKEN)
