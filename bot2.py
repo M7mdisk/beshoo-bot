@@ -3,6 +3,7 @@ import asyncio
 import os
 import random
 import datetime
+from dotenv import load_dotenv
 
 bot = discord.Client()
 
@@ -43,6 +44,7 @@ async def pushup_remainder():
 
 bot.loop.create_task(pushup_remainder())
 
+load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 bot.run(TOKEN)
