@@ -21,7 +21,7 @@ async def on_message(message):
     keywords = ["work", "workout", "push", "pushup", "up"]
     channel = message.channel
     for keyword in keywords:
-        if keyword.lower() in mesage.content,lower():
+        if keyword.lower() in mesage.content.lower():
             response = f"Did someone say {keyword.lower()}? Drop and give me 10 <@{message.channel}"
             await channel.send(response) 
 
