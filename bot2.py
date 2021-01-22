@@ -14,9 +14,7 @@ async def on_member_join(member):
     channel = discord.utils.get(bot.guilds[0].channels, name="general")
     response = f"Welcome to b-t-s server, {member.name}."
     await channel.send(response)
-
-
-
+    
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
