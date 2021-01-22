@@ -15,6 +15,8 @@ async def on_member_join(member):
     response = f"Welcome to b-t-s server, {member.name}."
     await channel.send(response)
 
+
+
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
