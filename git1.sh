@@ -14,7 +14,7 @@ git commit -m "Changes have been made on $DATE"
 
 echo "--------------------"
 
-echo "pushhing..."
+echo "pushing..."
 
 git push -u
 
