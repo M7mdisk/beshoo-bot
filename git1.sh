@@ -1,19 +1,24 @@
 #!/bin/sh
 cd ~/Documents/Github/min-bot
 
+echo "adding..."\n
+
 git add .
 
-echo "--------------------\n"
+echo "--------------------"
+
+echo "commiting..."\n
 
 DATE=$(date)
-
 git commit -m "Changes have been made on $DATE"
 
-echo "--------------------\n"
+echo "--------------------"
+
+echo "pushhing..."\n
 
 git push -u
 
 
-echo "--------------------\n"
+echo "--------------------"
 
 echo "Done.."
