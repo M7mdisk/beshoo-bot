@@ -19,11 +19,11 @@ async def on_member_join(member):
 async def on_message(message):
     if message.author == bot.user:
         return
-    keywords = ["work", "workout", "push", "pushup", "up"]
+    keywords = [ "workout", "pushup", "pullup"]
     channel = message.channel
     for keyword in keywords:
-        if keyword.lower() in mesage.content.lower():
-            response = f"Did someone say {keyword.lower()}? Drop and give me 10 <@{message.channel}"
+        if keyword.lower() in message.content.lower():
+            response = f"Did someone say {keyword.lower()}? Drop and give me 10 {message.author.mention}"
             await channel.send(response) 
 
 @bot.event
