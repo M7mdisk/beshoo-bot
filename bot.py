@@ -34,8 +34,7 @@ async def on_ready():
     #     if guild.name == GUILD:
     #         break
 
-    print(
-        f'{client.user} has connected')
+    print(f'{client.user} has connected')
     # await message.channel.send("I am online!")
 
 
