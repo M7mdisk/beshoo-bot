@@ -1,6 +1,8 @@
+from inspect import ArgSpec
 import os
 import random
 import discord
+from discord.ext.commands.core import command
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
@@ -20,13 +22,19 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    if message.content == "random":
+        number = random.randint(0, 50)
+        await message.channel.send(f"{number}")
+
+@bot.event
+async def on_message2(message):
     if message.content == "test":
         await message.channel.send("Testing 1 .. 2 .. 3!")
 
-@bot.command(name = "server")
-async def server_info(context):
-    guild = context.guild
-    await context.send(f"server name: {guild.name}\n server size: {len(guild.members)}\n Owner: {guild.owner.display_name}")
+#@bot.command(name = "server")
+#async def server_info(context):
+ #   guild = context.guild
+  #  await context.send(f"server name: {guild.name}\n server size: {len(guild.members)}\n Owner: {guild.owner.display_name}")
 
 
 bot.run(TOKEN)
