@@ -32,7 +32,7 @@ async def pushup_remainder():
         await bot.wait_until_ready()
         online_members = []
         for member in bot.get_all_members():
-            if member.status != discord.Status.oofline and member.id != bot.user.id:
+            if member.status != discord.Status.offline and member.id != bot.user.id:
                 online_members.append(member.id)
         if len(online_members) > 0:
             user = random.choice(online.members)
