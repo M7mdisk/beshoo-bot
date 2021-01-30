@@ -20,12 +20,11 @@ async def on_ready():
                           type = discord.ActivityType.watching, 
                           name = ': People coding!!'))
 
-<<<<<<< HEAD
 @bot.command(name = "server")
 async def server_info(context):
     guild = context.guild
     await context.send(f"server name: {guild.name}\nserver size:{len(guild.members)}\nOwner: {guild.owner.display_name}")
-=======
+
 @bot.event
 async def on_message(message):
     if message.content == "random":
@@ -36,12 +35,6 @@ async def on_message(message):
 async def on_message2(message):
     if message.content == "test":
         await message.channel.send("Testing 1 .. 2 .. 3!")
-
-#@bot.command(name = "server")
-#async def server_info(context):
- #   guild = context.guild
-  #  await context.send(f"server name: {guild.name}\n server size: {len(guild.members)}\n Owner: {guild.owner.display_name}")
->>>>>>> cefe14a8f80771a338069bb142cbb84023dc7926
 
 @bot.command()
 async def echo(ctx, *args):
