@@ -6,6 +6,8 @@ from discord.ext.commands.core import command
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from time import sleep
+import requests
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()  
@@ -26,12 +28,6 @@ async def server_info(context):
     await context.send(f"server name: {guild.name}\nserver size:{len(guild.members)}\nOwner: {guild.owner.display_name}")
 
 @bot.event
-async def on_message(message):
-    if message.content == "random":
-        number = random.randint(0, 50)
-        await message.channel.send(f"{number}")
-
-@bot.event
 async def on_message2(message):
     if message.content == "test":
         await message.channel.send("Testing 1 .. 2 .. 3!")
@@ -50,4 +46,15 @@ async def annoy(ctx,user: discord.Member = None,num = 10):
                 sleep(0.2)
                 await ctx.send(f"{str(user.mention)}, عم اجرب صوتيييي")
         
+@bot.command()
+async def advice(ctx):
+    r = requests.get("https://api.adviceslip.com/advice")
+    data = r.json()
+    await ctx.send(data["slip"]["advice"])
+
+@bot.command()
+async def meme(ctx):
+    r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
+    data = r.json()
+    await ctx.send(data["url"])
 bot.run(TOKEN)
