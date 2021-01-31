@@ -1,6 +1,7 @@
 from inspect import ArgSpec
 import os
 import random
+from string import printable                                                                                                                                                                           
 import discord
 from discord.ext.commands.core import command
 from dotenv import load_dotenv
@@ -75,9 +76,11 @@ async def urban(ctx, word):
             description=definition, color=0x00ff00)
     await ctx.send(embed=e)
 
-@bot.command(name="weather")
-async def weather(ctx,city):
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPEN_WEATHER_MAP_KEY}&units=metric"
+@bot.command(name="weather",aliases=["طقس"], )
+async def weather(ctx,city,lang ='en'):
+    if not not bool(set(city) - set(printable)) :
+        lang = "ar"
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPEN_WEATHER_MAP_KEY}&units=metric&lang={lang}"
     data = requests.get(url).json()
     if data['cod'] != 200:
         embed=discord.Embed(color=0xff0000)
@@ -89,6 +92,14 @@ async def weather(ctx,city):
     desc = data["weather"][0]["description"]
     icon = data["weather"][0]["icon"]
     country = data["sys"]["country"].lower()
+    if lang == "ar": 
+        embed=discord.Embed(color=0xffffff)
+        embed.add_field(name=f":flag_{country}: {city}", value=f"{temp}° س", inline=False)
+        embed.add_field(name="كأنها", value=f"{feels_like}° س", inline=True)
+        embed.add_field(name="الوصف", value=desc, inline=True)
+        embed.set_thumbnail(url=f"http://openweathermap.org/img/wn/{icon}@2x.png")
+        return await ctx.send(embed=embed)
+
     embed=discord.Embed(color=0xffffff)
     embed.add_field(name=f":flag_{country}: {city}", value=f"{temp}° c", inline=False)
     embed.add_field(name="Description", value=desc, inline=True)
