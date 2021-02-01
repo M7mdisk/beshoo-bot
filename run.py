@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
 from inspect import ArgSpec
 import os
+import platform
 import random
 from string import printable                                                                                                                                                                           
 import discord
@@ -108,15 +110,15 @@ async def weather(ctx,city,lang ='en'):
 
 
 
-"""
- play command
-
-"""
-@bot.command(name = "play")
-async def play(ctx, url:str):
-    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name="General")
-    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-    await voiceChannel.connect()
+@bot.command()
+async def ping(ctx):
+    stream = os.popen("vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'")
+    temp = stream.read()
+    embed=discord.Embed(title="Pong!", color=0x00ff1e)
+    embed.add_field(name="Latency", value=f"{round(bot.latency,1)}ms", inline=False)
+    if platform.system() == "Linux":
+        embed.add_field(name="Temperature", value=f"{temp[:-1]}°c", inline=True)
+    await ctx.send(embed=embed)
 
 bot.add_cog(TicTacToe(bot))
 bot.add_cog(Administration(bot))
