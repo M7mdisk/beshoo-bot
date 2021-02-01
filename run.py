@@ -14,7 +14,7 @@ from discord.ext.commands.core import Command, command
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from time import sleep
-
+from aa import advice, meme
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()  
@@ -53,28 +53,25 @@ async def annoy(ctx,user: discord.Member = None,num = 10):
                 sleep(0.2)
                 await ctx.send(f"{str(user.mention)}, عم اجرب صوتيييي")
         
-@bot.command()
-async def advice(ctx):
-    r = requests.get("https://api.adviceslip.com/advice")
-    data = r.json()
-    await ctx.send(data["slip"]["advice"])
+@bot.command(name="advice")
+async def r_advice(ctx):
+    res = await advice()
+    await ctx.send(res)
 
-# @bot.command()
-# async def meme(ctx):
-#     r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
-#     data = r.json()
-#     await ctx.send(data["url"])
+@bot.command(name="meme")
+async def r_meme(ctx):
+    '''
+    Get random meme from reddit
+    '''
+    e = await meme()
+    await ctx.send(embed = e)
 
-@bot.command()
-async def meme(ctx):
-    r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
-    data = r.json()
-    e = discord.Embed()
-    e.set_image(url=data["url"])
-    await ctx.send(embed=e)
 
 @bot.command(name="def")
 async def urban(ctx, word):
+    '''
+    Get command from urban dictionary
+    '''
     data= requests.get(f"http://api.urbandictionary.com/v0/define?term={word}").json()
     top = data['list'][0]
     definition=f"{top['definition'].replace('[','').replace(']','')}"
