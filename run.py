@@ -12,6 +12,7 @@ from discord.ext.commands import Bot
 from time import sleep
 import requests
 from ttt import TicTacToe
+from admin import Administration
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()  
@@ -56,11 +57,6 @@ async def advice(ctx):
     data = r.json()
     await ctx.send(data["slip"]["advice"])
 
-# @bot.command()
-# async def meme(ctx):
-#     r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
-#     data = r.json()
-#     await ctx.send(data["url"])
 
 @bot.command()
 async def meme(ctx):
@@ -123,5 +119,6 @@ async def play(ctx, url:str):
     await voiceChannel.connect()
 
 bot.add_cog(TicTacToe(bot))
+bot.add_cog(Administration(bot))
 
 bot.run(TOKEN)

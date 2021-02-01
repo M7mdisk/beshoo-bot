@@ -1,15 +1,8 @@
 import discord
 import random
 from discord.ext import commands
-from discord.ext.commands.core import Command, command
 from itertools import count
 
-
-# player1 = ""
-# player2 = ""
-# turn = ""
-# gameOver = True
-# board = []
 winningConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -110,7 +103,10 @@ class TicTacToe(commands.Cog):
         else:
             await ctx.send("start a new game, using !tictactoe command")
 
-
+    @commands.command()
+    async def endgame(self,ctx):
+        self.gameOver = True
+        await ctx.send(f"Game between {self.player1.mention} and {self.player2.mention} Ended.")
     @tictactoe.error
     async def tictactoe_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
