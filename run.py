@@ -17,7 +17,7 @@ from time import sleep
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-intents = discord.Intents.default()  
+intents = discord.Intents.default()
 intents.members = True
 bot= Bot(command_prefix = '!',intents=intents)
 OPEN_WEATHER_MAP_KEY = "ea073e04bc85f31dab1408ad497f277f"
@@ -53,25 +53,16 @@ async def annoy(ctx,user: discord.Member = None,num = 10):
                 sleep(0.2)
                 await ctx.send(f"{str(user.mention)}, عم اجرب صوتيييي")
         
-@bot.command()
+@bot.command(name="advice")
 async def advice(ctx):
     r = requests.get("https://api.adviceslip.com/advice")
     data = r.json()
-    await ctx.send(data["slip"]["advice"])
+    await (advice())
 
-# @bot.command()
-# async def meme(ctx):
-#     r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
-#     data = r.json()
-#     await ctx.send(data["url"])
 
-@bot.command()
+@bot.command(name="meme")
 async def meme(ctx):
-    r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
-    data = r.json()
-    e = discord.Embed()
-    e.set_image(url=data["url"])
-    await ctx.send(embed=e)
+    await ctx.send(meme())
 
 @bot.command(name="def")
 async def urban(ctx, word):
