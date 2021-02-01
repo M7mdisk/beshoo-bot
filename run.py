@@ -14,7 +14,7 @@ from discord.ext.commands.core import Command, command
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from time import sleep
-
+from aa import advice, meme
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
@@ -66,6 +66,9 @@ async def meme(ctx):
 
 @bot.command(name="def")
 async def urban(ctx, word):
+    '''
+    Get command from urban dictionary
+    '''
     data= requests.get(f"http://api.urbandictionary.com/v0/define?term={word}").json()
     top = data['list'][0]
     definition=f"{top['definition'].replace('[','').replace(']','')}"
