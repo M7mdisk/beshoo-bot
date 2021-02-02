@@ -17,11 +17,6 @@ import requests
 from ttt import TicTacToe
 from jpp import VoiceChannels
 from admin import Administration
-<<<<<<< HEAD
-
-=======
-from misc import Miscellaneous
->>>>>>> b8714c419526a14b324f95533ef162a52b2880d5
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
@@ -45,10 +40,6 @@ async def on_message2(message):
 
 bot.add_cog(TicTacToe(bot))
 bot.add_cog(Administration(bot))
-<<<<<<< HEAD
 bot.add_cog(VoiceChannels(bot))
-=======
-bot.add_cog(Miscellaneous(bot))
->>>>>>> b8714c419526a14b324f95533ef162a52b2880d5
 
 bot.run(TOKEN)
