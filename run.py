@@ -15,7 +15,7 @@ from discord.ext.commands import Bot
 from time import sleep
 import requests
 from ttt import TicTacToe
-from jpp import VoiceChannels
+from voice import VoiceChannels
 from admin import Administration
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
