@@ -3,8 +3,13 @@ from inspect import ArgSpec
 import os
 import platform
 import random
+from tokenize import Name
+import youtube_dl
+from youtube_dl import YoutubeDL
+from requests import get
 from string import printable                                                                                                                                                                           
 import discord
+from discord import FFmpegPCMAudio
 from discord import utils
 from discord import client
 from discord import channel
@@ -73,7 +78,7 @@ async def urban(ctx, word):
     await ctx.send(embed=e)
 
 
-###not working for some reason:
+
 @bot.command(name="meme")
 async def meme(ctx):
     r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
@@ -82,15 +87,72 @@ async def meme(ctx):
     e.set_image(url=data["url"])
     await ctx.send(embed=e)
 
+### new:
+@bot.command(name = "join")
+async def join(ctx):
+    chnl = ctx.author.voice.channel
+    await chnl.connect()
+    await ctx.send("I Joined the Voice channel!")
 
 ### new:
+@bot.command(name = "play")
+async def play(ctx, url: str):
+
+    song_there = os.path.isfile("song.mp3")
+    try:
+        if song_there:
+            os.remove("song.mp3")
+            print("Removed old song file")
+    except PermissionError:
+        print("Trying to delete song file, but it's being played")
+        await ctx.send("ERROR: Music playing")
+        return
+
+    await ctx.send("Getting everything ready now")
+
+    #voice = get(bot.voice_clients, ctx.guild)
+    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
+    }
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        print("Downloading audio now\n")
+        ydl.download([url])
+
+    for file in os.listdir("./"):
+        if file.endswith(".mp3"):
+            name = file
+            print(f"Renamed File: {file}\n")
+            os.rename(file, "song.mp3")
+
+    voice.play(discord.FFmpegPCMAudio("song.mp3"), after=lambda e: print("Song done!"))
+    voice.source = discord.PCMVolumeTransformer(voice.source)
+    voice.source.volume = 0.07
+
+    nname = Name.rsplit("-", 2)
+    await ctx.send(f"Playing: {nname[0]}")
+    print("playing\n")
+
+### new:
+@bot.command(name = "leave")
+async def leave(ctx):
+    await ctx.voice_client.disconnect()
+    await ctx.send("I left the Voice channel!")
+
+
 @bot.command(name = "editme")
 async def edit_me(ctx):
   message = await ctx.send("hello")
   await message.edit(content="bye!")
 
 
-###edited:
 @bot.command(name="weather",aliases=["طقس"], )
 async def weather(ctx,city,lang ='en'):
     if not not bool(set(city) - set(printable)) :
