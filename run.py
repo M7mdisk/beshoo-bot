@@ -49,19 +49,18 @@ async def echo(ctx, *args):
 async def annoy(ctx,user: discord.Member = None,num = 10):
     if user:
         if user.id == 787194682354040833:
-            await ctx.send(f"{str(user.mention)}, عم اجرب صوتيييي")
+            await ctx.send("No hahahahaahaaaaaaaaa get siked")
         else:
-            for i in range(num):
+            for _ in range(num):
                 sleep(0.2)
                 await ctx.send(f"{str(user.mention)}, عم اجرب صوتيييي")
 
 
-###not working for some reason:
 @bot.command(name="advice")
 async def advice(ctx):
     r = requests.get("https://api.adviceslip.com/advice")
     data = r.json()
-    await (advice())
+    await (data["slip"]["advice"])
 
 
 @bot.command(name="def")
@@ -77,7 +76,11 @@ async def urban(ctx, word):
 ###not working for some reason:
 @bot.command(name="meme")
 async def meme(ctx):
-    await ctx.send(meme())
+    r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
+    data = r.json()
+    e = discord.Embed()
+    e.set_image(url=data["url"])
+    await ctx.send(embed=e)
 
 
 ### new:
