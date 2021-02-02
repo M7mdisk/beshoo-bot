@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from time import sleep
 import requests
+from misc import Miscellaneous
 from ttt import TicTacToe
 from voice import VoiceChannels
 from admin import Administration
@@ -37,7 +38,7 @@ async def on_message2(message):
         await message.channel.send("Testing 1 .. 2 .. 3!")
 
 
-
+bot.add_cog(Miscellaneous(bot))
 bot.add_cog(TicTacToe(bot))
 bot.add_cog(Administration(bot))
 bot.add_cog(VoiceChannels(bot))
