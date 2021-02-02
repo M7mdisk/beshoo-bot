@@ -95,12 +95,13 @@ async def edit_me(ctx):
 async def weather(ctx,city,lang ='en'):
     if not not bool(set(city) - set(printable)) :
         lang = "ar"
+    msg = await ctx.send("Measuring...")    
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPEN_WEATHER_MAP_KEY}&units=metric&lang={lang}"
     data = requests.get(url).json()
     if data['cod'] != 200:
         embed=discord.Embed(color=0xff0000)
         embed.add_field(name=f"Error!", value=f"We could not find that city!", inline=False)
-        return await ctx.send(embed=embed)        
+        return await msg.edit(content="",embed=embed)   
     city = data["name"]
     temp = data["main"]["temp"]
     feels_like = data["main"]["feels_like"]
@@ -120,8 +121,8 @@ async def weather(ctx,city,lang ='en'):
     embed.add_field(name="Description", value=desc, inline=True)
     embed.add_field(name="Feels Like", value=f"{feels_like}° c", inline=True)
     embed.set_thumbnail(url=f"http://openweathermap.org/img/wn/{icon}@2x.png")
-    msg = await ctx.send("Calculating...")
-    return await ctx.send(content = msg, embed=embed)
+    
+    return await msg.edit(content="",embed=embed)
 
 
 
