@@ -97,7 +97,7 @@ class Miscellaneous(commands.Cog):
     @commands.command()
     async def ping(self,ctx):
         if platform.system() == "Linux":
-            stream = os.popen("vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'")
+            stream = os.popen(r"vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'")
             temp = stream.read()
         embed=discord.Embed(title="Pong!", color=0x00ff1e)
         embed.add_field(name="Latency", value=f"{round(self.bot.latency,1)}ms", inline=False)
@@ -123,4 +123,4 @@ class Miscellaneous(commands.Cog):
         embed=discord.Embed(title="Done!", url=data["response"]["image_url"])
         embed.set_image(url=data["response"]["image_url"])
         embed.set_footer(text=f"Time: {r.elapsed.total_seconds()}")
-        await ctx.send(embed=embed)
+        await msg.edit(content="",embed=embed)
