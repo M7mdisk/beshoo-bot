@@ -39,6 +39,7 @@ class Miscellaneous(commands.Cog):
         await ctx.send(' '.join(args))
 
     @commands.command()
+    @commands.guild_only()
     async def annoy(self,ctx,user: discord.Member = None,num = 10):
         if user:
             if user.id == 787194682354040833:
@@ -48,9 +49,15 @@ class Miscellaneous(commands.Cog):
                     await ctx.send(f"{str(user.mention)}, عم اجرب صوتيييي")
 
     @commands.command(name = "server")
+    @commands.guild_only()
     async def server_info(self,ctx):
         guild = ctx.guild
-        await ctx.send(f"server name: {guild.name}\nserver size:{len(guild.members)}\nOwner: {guild.owner.display_name}")
+        embed=discord.Embed(color=0xffffff)
+        embed.set_thumbnail(url=guild.icon_url)
+        embed.add_field(name="Server name", value=guild.name, inline=False)
+        embed.add_field(name="Size", value=guild.member_count, inline=False)
+        embed.add_field(name="Owner", value=guild.owner.mention, inline=False)
+        await ctx.send(embed=embed)
 
 
     @commands.command(name="weather",aliases=["طقس"], )
@@ -110,7 +117,10 @@ class Miscellaneous(commands.Cog):
             'x-rapidapi-key': "157b8ea155msh5a9d9520fc875b8p1d5754jsn1f29da0cc7a7",
             'x-rapidapi-host': "background-removal.p.rapidapi.com"
             }
+        msg = await ctx.send("Working on it...")
         r = requests.request("POST", url, data=payload,headers=headers)
         data = r.json()
-        print(data)
-        await ctx.send(data["response"]["image_url"])
+        embed=discord.Embed(title="Done!", url=data["response"]["image_url"])
+        embed.set_image(url=data["response"]["image_url"])
+        embed.set_footer(text=f"Time: {r.elapsed.total_seconds()}")
+        await ctx.send(embed=embed)

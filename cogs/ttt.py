@@ -26,6 +26,7 @@ class TicTacToe(commands.Cog):
         self.count = count
 
     @commands.command()
+    @commands.guild_only()
     async def tictactoe(self, ctx, p1 : discord.Member, p2 : discord.Member):
 
         if self.gameOver:
@@ -62,6 +63,7 @@ class TicTacToe(commands.Cog):
             await ctx.send("The game is already in progress! Finish it before starting a new one")
 
     @commands.command()
+    @commands.guild_only()
     async def place(self,ctx, pos : int):
         if not self.gameOver:
             mark = ""
@@ -104,6 +106,7 @@ class TicTacToe(commands.Cog):
             await ctx.send("start a new game, using !tictactoe command")
 
     @commands.command()
+    @commands.guild_only()
     async def endgame(self,ctx):
         self.gameOver = True
         await ctx.send(f"Game between {self.player1.mention} and {self.player2.mention} Ended.")
