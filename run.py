@@ -18,6 +18,7 @@ from misc import Miscellaneous
 from ttt import TicTacToe
 from voice import VoiceChannels
 from admin import Administration
+from Random import random
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
@@ -42,5 +43,6 @@ bot.add_cog(Miscellaneous(bot))
 bot.add_cog(TicTacToe(bot))
 bot.add_cog(Administration(bot))
 bot.add_cog(VoiceChannels(bot))
+bot.add_cog(random(bot))
 
 bot.run(TOKEN)
