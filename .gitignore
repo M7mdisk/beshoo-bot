@@ -1,3 +1,4 @@
 .env
 git1.sh
 __pycache__/
+*.mp3
