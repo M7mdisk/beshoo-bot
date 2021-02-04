@@ -9,6 +9,8 @@ from cogs.ttt import TicTacToe
 from cogs.voice import VoiceChannels
 from cogs.admin import Administration
 from cogs.Random import random
+from cogs.images import Images
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
@@ -38,5 +40,6 @@ bot.add_cog(TicTacToe(bot))
 bot.add_cog(Administration(bot))
 bot.add_cog(VoiceChannels(bot))
 bot.add_cog(random(bot))
+bot.add_cog(Images(bot))
 
 bot.run(TOKEN)

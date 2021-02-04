@@ -105,22 +105,3 @@ class Miscellaneous(commands.Cog):
             embed.add_field(name="Temperature", value=f"{temp[:-1]}°c", inline=True)
         await ctx.send(embed=embed)
     
-    @commands.command()
-    async def bgremove(self,ctx):
-        url = "https://background-removal.p.rapidapi.com/remove"
-        # pic_ext = ['.jpg','.png','.jpeg']
-        if not ctx.message.attachments :
-            return await ctx.send("Attach an image!")
-        payload = f"image_url={ctx.message.attachments[0].url}"
-        headers = {
-            'content-type': "application/x-www-form-urlencoded",
-            'x-rapidapi-key': "157b8ea155msh5a9d9520fc875b8p1d5754jsn1f29da0cc7a7",
-            'x-rapidapi-host': "background-removal.p.rapidapi.com"
-            }
-        msg = await ctx.send("Working on it...")
-        r = requests.request("POST", url, data=payload,headers=headers)
-        data = r.json()
-        embed=discord.Embed(title="Done!", url=data["response"]["image_url"])
-        embed.set_image(url=data["response"]["image_url"])
-        embed.set_footer(text=f"Time: {r.elapsed.total_seconds()}")
-        await msg.edit(content="",embed=embed)
