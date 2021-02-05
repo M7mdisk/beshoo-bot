@@ -3,9 +3,9 @@
 
 Who are we?
 -----------
-> * vreoo (nibras) and M7mdisk (mohammed) 18 years old students studying computers and software.
-* we both are interested in programming and obssesed about it.
-* we wantred to test our skills and learn more so we decided to make a discord bot as a beginning.
+ * vreoo (nibras) and M7mdisk (mohammed) 18 years old students studying computers and software.
+ * we both are interested in programming and obssesed about it.
+ * we wantred to test our skills and learn more so we decided to make a discord bot as a beginning.
 
 What are we introducing?
 -----------------------
