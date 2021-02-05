@@ -1,10 +1,10 @@
 import discord
 import requests
 from discord.ext import commands
-from string import printable                                                                                                                                                                           
+from string import printable
 import os
 import platform
-OPEN_WEATHER_MAP_KEY = "ea073e04bc85f31dab1408ad497f277f"
+OPEN_WEATHER_MAP_KEY = 'ea073e04bc85f31dab1408ad497f277f'
 class Miscellaneous(commands.Cog):
 
     def __init__(self,bot):
