@@ -18,4 +18,3 @@ Is the project finished?
 -----------------------
 
 **No, it is not**, we are still testing the bot and adding stuff to it.
-
