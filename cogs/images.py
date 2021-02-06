@@ -32,58 +32,47 @@ class Images(commands.Cog):
             return await ctx.send(embed=embed)
 
         # Load image to be cropped as thumbnail
-        im = Image.open(requests.get(ctx.message.attachments[0].url, stream=True).raw)
         if not data["result"]["faces"]:
             embed=discord.Embed(title="No faces found", color=0xff0000)
             return await ctx.send(embed=embed)
-        # embeds = []
-        # files = []
+        embeds = []
+        n=len(data["result"]["faces"])
         # Generate embeds with data displayed
         for i,face in  enumerate(data["result"]["faces"]):
-            with BytesIO() as image_binary:
-                embed=discord.Embed(color=0x00ff00)
-                coords=face["coordinates"]
-                area = (coords["xmin"],coords["ymin"],coords["xmax"],coords["ymax"])
-                cropped = im.crop(area)
-                cropped.save(image_binary,'PNG')
-                image_binary.seek(0)
-                d_file = discord.File(fp=image_binary, filename=f'image{i}.png')
-                embed.set_thumbnail(url=f"attachment://image{i}.png")
-                embed.add_field(name=f"Face #{i+1}", value=f"{round(face['confidence'],1)}% confident", inline=False)
-                for attribute in face["attributes"]:
-                    embed.add_field(name=f"{attribute['type'].title()}", value=f"{attribute['label'].title()} ({round(attribute['confidence'],1)}%)", inline=False)
-                # embeds.append(embed)
-                # files.append(d_file)
-                await ctx.send(embed=embed,file=d_file)
+            embed=discord.Embed(color=0x00ff00)
+            coords=face["coordinates"]
+            thumb = f"https://crop-api.herokuapp.com/crop/?url={ctx.message.attachments[0].url}&xmin={coords['xmin']}&ymin={coords['ymin']}&xmax={coords['xmax']}&ymax={coords['ymax']}"
+            embed.set_thumbnail(url=thumb)
+            embed.add_field(name=f"Face #{i+1}/{n}", value=f"{round(face['confidence'],1)}% confident", inline=False)
+            for attribute in face["attributes"]:
+                embed.add_field(name=f"{attribute['type'].title()}", value=f"{attribute['label'].title()} ({round(attribute['confidence'],1)}%)", inline=False)
+            embeds.append(embed)
 
-        # TODO: Maybe fix this when discord allows editing files.
-        # if len(embeds) == 1:
-        #     return  await ctx.send(embed=embeds[0],file=files[0])
-        # i = 0
+        if len(embeds) == 1:
+            return  await ctx.send(embed=embeds[0])
+        i = 0
 
-        # msg = await ctx.send(embed=embeds[0],file=files[0])
-        # await msg.add_reaction("◀️")
-        # await msg.add_reaction("▶️")        
-        # def check(reaction, user):
-        #     return user == ctx.author and (str(reaction.emoji) == '◀️' or str(reaction.emoji) == '▶️' )
-        # t_end = time.time() + 60 * 10
-        # while time.time() < t_end:
-        #     reaction, user = await self.bot.wait_for('reaction_add', timeout=60.0, check=check)
-        #     if str(reaction.emoji) == '◀️':
-        #         await msg.remove_reaction("◀️", user)
-        #         if i >0:
-        #             i-=1
-        #             print("moving left")
-        #             await msg.edit(embed = embeds[i])
-        #     elif str(reaction.emoji) == '▶️':
-        #         await msg.remove_reaction("▶️", user)
-        #         if i <len(embeds)-1:
-        #             i+=1
-        #             print("moving right")
-        #             await msg.edit(embed = embeds[i])
+        msg = await ctx.send(embed=embeds[0])
+        await msg.add_reaction("◀️")
+        await msg.add_reaction("▶️")        
+        def check(reaction, user):
+            return user != self.bot.user and (str(reaction.emoji) == '◀️' or str(reaction.emoji) == '▶️' )
+        t_end = time.time() + 60 * 10
+        while time.time() < t_end:
+            reaction, user = await self.bot.wait_for('reaction_add', timeout=60.0, check=check)
+            if str(reaction.emoji) == '◀️':
+                await msg.remove_reaction("◀️", user)
+                if user == ctx.author and i >0:
+                    i-=1
+                    await msg.edit(embed = embeds[i])
+            elif str(reaction.emoji) == '▶️':
+                await msg.remove_reaction("▶️", user)
+                if user == ctx.author and i <len(embeds)-1:
+                    i+=1
+                    await msg.edit(embed = embeds[i])
+
 
     # Command below can be utalized for editing images without files.
-
 
     # @commands.command()
     # async def pages(self,ctx,n=3):
