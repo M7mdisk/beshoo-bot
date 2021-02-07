@@ -13,60 +13,75 @@ class HELP(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-
-
-    @commands.command(name="help")
+    @commands.command(name="helpp")
     async def pages(self,ctx):
-        author = ctx.message.author
-        user = discord.User.id
-        embed1 = discord.Embed(color = discord.Colour.orange())
-        embed1.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+        # author = ctx.message.author
+        # user = discord.User.id
+        # embed1 = discord.Embed(color = discord.Colour.orange())
+        # embed1.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
 
-        embed1.title = "A list of all بشير's commands"
-        embed1.description = "Miscellaneous:"
-        embed1.add_field(name='!meme', value='Generate Random memes.', inline=False)
-        embed1.add_field(name='!def < Word >', value='Defines any word you type.', inline=False)
-        embed1.add_field(name='!advice', value='Generate Random life advice.', inline=False)
-        embed1.add_field(name='!weather < Country >', value='Shows the weather of the Country you entered.', inline=False)
-        embed1.set_footer(text="page 1/6")
-        # ===================================
-        embed2 = discord.Embed(color = discord.Colour.orange())
-        embed2.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+        # embed1.title = "A list of all بشير's commands"
+        # embed1.description = "Miscellaneous:"
+        # embed1.add_field(name='!meme', value='Generate Random memes.', inline=False)
+        # embed1.add_field(name='!def < Word >', value='Defines any word you type.', inline=False)
+        # embed1.add_field(name='!advice', value='Generate Random life advice.', inline=False)
+        # embed1.add_field(name='!weather < Country >', value='Shows the weather of the Country you entered.', inline=False)
+        # embed1.set_footer(text="page 1/6")
+        # # ===================================
+        # embed2 = discord.Embed(color = discord.Colour.orange())
+        # embed2.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
 
-        embed2.title = "A list of all بشير's commands"
-        embed2.description = "Admin:"
-        embed2.add_field(name='!kick < @user >', value='Kicks selected member.', inline=False)
-        embed2.add_field(name='!ban < @user >', value='Ban selected member.', inline=False)
-        embed2.add_field(name='!mute < @user >', value='Mute selected member.', inline=False)
-        embed2.set_footer(text="page 2/6")
-        # ====================================
-        embed3 = discord.Embed(color = discord.Colour.orange())
-        embed3.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+        # embed2.title = "A list of all بشير's commands"
+        # embed2.description = "Admin:"
+        # embed2.add_field(name='!kick < @user >', value='Kicks selected member.', inline=False)
+        # embed2.add_field(name='!ban < @user >', value='Ban selected member.', inline=False)
+        # embed2.add_field(name='!mute < @user >', value='Mute selected member.', inline=False)
+        # embed2.set_footer(text="page 2/6")
+        # # ====================================
+        # embed3 = discord.Embed(color = discord.Colour.orange())
+        # embed3.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
 
-        embed3.title = "A list of all بشير's commands"
-        embed3.description = "Tic Tac Toe:"
-        embed3.add_field(name='!tictactoe < @user > < @user >', value='Starts a new game.', inline=False)
-        embed3.add_field(name='!endgame', value='Abort the game.', inline=False)
-        embed3.add_field(name='!place < field number >', value='place a mark on selected field number.', inline=False)
-        embed3.set_footer(text="page 3/6")
-        # =====================================
-        embed4 = discord.Embed(color = discord.Colour.orange())
-        embed4.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+        # embed3.title = "A list of all بشير's commands"
+        # embed3.description = "Tic Tac Toe:"
+        # embed3.add_field(name='!tictactoe < @user > < @user >', value='Starts a new game.', inline=False)
+        # embed3.add_field(name='!endgame', value='Abort the game.', inline=False)
+        # embed3.add_field(name='!place < field number >', value='place a mark on selected field number.', inline=False)
+        # embed3.set_footer(text="page 3/6")
+        # # =====================================
+        # embed4 = discord.Embed(color = discord.Colour.orange())
+        # embed4.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
 
-        embed4.title = "A list of all بشير's commands"
-        embed4.description = "Voice Channel:"
-        embed4.add_field(name='!join', value='Join\'s a voice channel.', inline=False)
-        embed4.add_field(name='!play < youtube URL >', value='Downloads the music then start playing it.', inline=False)
-        embed4.add_field(name='!leave < field number >', value='Leaves the voice channel.', inline=False)
-        embed4.set_footer(text="page 4/6")
-        # ======================================
+        # embed4.title = "A list of all بشير's commands"
+        # embed4.description = "Voice Channel:"
+        # embed4.add_field(name='!join', value='Join\'s a voice channel.', inline=False)
+        # embed4.add_field(name='!play < youtube URL >', value='Downloads the music then start playing it.', inline=False)
+        # embed4.add_field(name='!leave < field number >', value='Leaves the voice channel.', inline=False)
+        # embed4.set_footer(text="page 4/6")
+        # # ======================================
+        cogs_dict = self.bot.cogs
+        embeds = []
+        for cogname,cog in cogs_dict.items(): 
+            embed = discord.Embed(title=cogname)
+            commands = cog.get_commands()
+            for c in commands:
+                parent = c.full_parent_name
+                if len(c.aliases) > 0:
+                    aliases = '|'.join(c.aliases)
+                    fmt = f'[{c.name}|{aliases}]' 
+                    if parent:
+                        fmt = parent + ' ' + fmt
+                    alias = fmt
+                else:
+                    alias = c.name if not parent else parent + ' ' + c.name
+                name = f"{self.bot.command_prefix}{alias} {c.signature}"
+                desc = c.help if c.help else "\u200c"
+                embed.add_field(name=name, value=desc, inline=False)
+            embeds.append(embed)
 
-
-        embeds = [embed1, embed2, embed3, embed4] # your  embeds here
+        # embeds = [embed1, embed2, embed3, embed4] # your  embeds here
         i=0
-
         # send the first embed and add reactions
-        msg = await ctx.send(embed=embeds[0])
+        msg = await ctx.send(embed=embeds[0].set_footer(text=f"page {i+1}/{len(cogs_dict)}"))
         await msg.add_reaction("◀️")
         await msg.add_reaction("▶️")
 
@@ -82,9 +97,9 @@ class HELP(commands.Cog):
                 await msg.remove_reaction("◀️", user)
                 if user == ctx.author and i >0:
                     i-=1 # change the index accordingly
-                    await msg.edit(embed = embeds[i]) # edit the message
+                    await msg.edit(embed = embeds[i].set_footer(text=f"page {i+1}/{len(cogs_dict)}")) # edit the message
             elif str(reaction.emoji) == '▶️':
                 await msg.remove_reaction("▶️", user)
                 if user == ctx.author and i <len(embeds)-1:
                     i+=1 # change the index accordingly
-                    await msg.edit(embed = embeds[i]) # edit the message
+                    await msg.edit(embed = embeds[i].set_footer(text=f"page {i+1}/{len(cogs_dict)}")) # edit the message

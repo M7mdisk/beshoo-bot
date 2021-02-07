@@ -102,6 +102,8 @@ class Images(commands.Cog):
 
     @commands.command()
     async def bgremove(self,ctx):
+        '''Remove Background from image!
+        '''
         url = "https://background-removal.p.rapidapi.com/remove"
         # pic_ext = ['.jpg','.png','.jpeg']
         if not ctx.message.attachments :

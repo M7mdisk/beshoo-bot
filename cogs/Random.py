@@ -6,7 +6,7 @@ from discord.ext.commands import cog
 import aiohttp
 import requests
 
-class random(commands.Cog):
+class Random(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot

@@ -12,6 +12,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command(name="meme")
     async def meme(self,ctx):
+        '''Generate Random memes.'''
         r = requests.get("https://meme-api.herokuapp.com/gimme/memes")
         data = r.json()
         e = discord.Embed()
@@ -21,6 +22,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command(name="def")
     async def urban(self,ctx, word):
+        '''Defines any word you type.'''
         data= requests.get(f"http://api.urbandictionary.com/v0/define?term={word}").json()
         top = data['list'][0]
         definition=f"{top['definition'].replace('[','').replace(']','')}"
@@ -30,6 +32,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command(name="advice")
     async def advice(self,ctx):
+        '''Generate random lief advice'''
         r = requests.get("https://api.adviceslip.com/advice")
         data = r.json()
         await (data["slip"]["advice"])
@@ -51,6 +54,7 @@ class Miscellaneous(commands.Cog):
     @commands.command(name = "server")
     @commands.guild_only()
     async def server_info(self,ctx):
+        '''Display basic server info'''
         guild = ctx.guild
         embed=discord.Embed(color=0xffffff)
         embed.set_thumbnail(url=guild.icon_url)
@@ -62,6 +66,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command(name="weather",aliases=["طقس"], )
     async def weather(self,ctx,city,lang ='en'):
+        '''Shows the weather of the Country you entered.'''
         if not not bool(set(city) - set(printable)) :
             lang = "ar"
         msg = await ctx.send("Measuring...")    
@@ -96,6 +101,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def ping(self,ctx):
+        '''Check the bot's ping'''
         if platform.system() == "Linux":
             stream = os.popen(r"vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'")
             temp = stream.read()
