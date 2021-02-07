@@ -10,12 +10,13 @@ from cogs.voice import VoiceChannels
 from cogs.admin import Administration
 from cogs.Random import random
 from cogs.images import Images
-
+from cogs.help import HELP
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 bot= Bot(command_prefix = '!',intents=intents)
+bot.remove_command('help')
 
 
 @bot.event
@@ -41,5 +42,5 @@ bot.add_cog(Administration(bot))
 bot.add_cog(VoiceChannels(bot))
 bot.add_cog(random(bot))
 bot.add_cog(Images(bot))
-
+bot.add_cog(HELP(bot))
 bot.run(TOKEN)
