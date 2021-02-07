@@ -28,6 +28,7 @@ class TicTacToe(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def tictactoe(self, ctx, p1 : discord.Member, p2 : discord.Member):
+        ''' Starts a game between two users '''
 
         if self.gameOver:
             self.board = [":white_large_square:", ":white_large_square:", ":white_large_square:",
@@ -65,6 +66,7 @@ class TicTacToe(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def place(self,ctx, pos : int):
+        ''' Place a mark on the playing table '''
         if not self.gameOver:
             mark = ""
             if self.turn == ctx.author:
@@ -108,6 +110,7 @@ class TicTacToe(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def endgame(self,ctx):
+        ''' End the game before it finishs '''
         self.gameOver = True
         await ctx.send(f"Game between {self.player1.mention} and {self.player2.mention} Ended.")
     @tictactoe.error

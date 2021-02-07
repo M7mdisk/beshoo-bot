@@ -13,8 +13,9 @@ class HELP(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="helpp")
+    @commands.command(name="help")
     async def pages(self,ctx):
+        ''' Helps you '''
         # author = ctx.message.author
         # user = discord.User.id
         # embed1 = discord.Embed(color = discord.Colour.orange())
@@ -60,8 +61,11 @@ class HELP(commands.Cog):
         # # ======================================
         cogs_dict = self.bot.cogs
         embeds = []
-        for cogname,cog in cogs_dict.items(): 
-            embed = discord.Embed(title=cogname)
+        for cogname,cog in cogs_dict.items():
+            author = ctx.message.author
+            user = discord.User.id
+            embed = discord.Embed(title=cogname, color = discord.Colour.orange())
+            embed.set_author(name=f"{ctx.author}", icon_url=ctx.author.avatar_url)
             commands = cog.get_commands()
             for c in commands:
                 parent = c.full_parent_name

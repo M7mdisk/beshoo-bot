@@ -16,6 +16,8 @@ class Images(commands.Cog):
     
     @commands.command()
     async def face(self,ctx,):
+        ''' Detect faces in the picture and give further info about them '''
+
         url= "https://api.imagga.com/v2/faces/detections?return_face_attributes=1&image_url="
         
         if not ctx.message.attachments :

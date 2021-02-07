@@ -16,6 +16,7 @@ class Random(commands.Cog):
 
     @commands.command(name = "cat")
     async def random_cat(self, ctx):
+        ''' Generate random cat images/gif '''
         r = requests.get("http://aws.random.cat/meow") 
         data = r.json()
         embed = discord.Embed(title="Meow")
@@ -26,6 +27,7 @@ class Random(commands.Cog):
 
     @commands.command(name = "dog")
     async def random_dog(self, ctx):
+        ''' Generate random dog images/gif '''
         r = requests.get("https://random.dog/woof.json") 
         data = r.json()
         embed = discord.Embed(title="Woof")

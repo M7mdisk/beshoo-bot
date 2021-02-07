@@ -25,6 +25,7 @@ class VoiceChannels(commands.Cog):
     @commands.command(name = "join")
     @commands.guild_only()
     async def join(self, ctx):
+        ''' Join the voice channel '''
         self.chnl = ctx.author.voice.channel
         await self.chnl.connect()
         await ctx.send("I Joined the Voice channel!")
@@ -32,6 +33,7 @@ class VoiceChannels(commands.Cog):
     @commands.command(name = "play")
     @commands.guild_only()
     async def play(self, ctx, url: str):
+        ''' Download the URL and play the music '''
 
         self.song_there = os.path.isfile("song.mp3")
         try:
@@ -77,5 +79,6 @@ class VoiceChannels(commands.Cog):
     @commands.command(name = "leave")
     @commands.guild_only()
     async def leave(self, ctx):
+        ''' Leave the voice channel '''
         await ctx.voice_client.disconnect()
         await ctx.send("I left the Voice channel!")

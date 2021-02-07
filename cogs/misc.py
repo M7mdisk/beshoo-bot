@@ -39,11 +39,13 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def echo(self,ctx, *args):
+        ''' Reapeat whatever you type after !echo '''
         await ctx.send(' '.join(args))
 
     @commands.command()
     @commands.guild_only()
     async def annoy(self,ctx,user: discord.Member = None,num = 10):
+        ''' Annoy Whoever you mention, ecept the egg MoMo '''
         if user:
             if user.id == 787194682354040833:
                 await ctx.send("No hahahahaahaaaaaaaaa get siked")

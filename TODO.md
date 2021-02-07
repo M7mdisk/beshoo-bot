@@ -7,11 +7,11 @@
 
 ## General improvements and bug fixes.
 
-- [ ] Write a good readme.
+- [✅] Write a good readme.
 
 - [ ] Fix admin commands and use proper ones.
 
-- [ ] Improve help messages.
+- [✅] Improve help messages.
 
 - [ ] Make voice commands work with multiple servers.
 

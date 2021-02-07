@@ -16,7 +16,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 bot= Bot(command_prefix = '!',intents=intents)
-# bot.remove_command('help')
+bot.remove_command('help')
 
 
 @bot.event

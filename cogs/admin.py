@@ -11,6 +11,7 @@ class Administration(commands.Cog):
     @commands.has_permissions(administrator=True)
     @commands.command()
     async def kick(self,ctx, member: discord.Member, *, why=None):
+        ''' Kick a member from the server '''
         await member.kick(reason=why)
         await ctx.channel.send(f"**{member} has been kicked from this server by {ctx.author}**")
 
@@ -23,6 +24,7 @@ class Administration(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def mute(self,ctx, member: discord.Member):
+        ''' Mute the member '''
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         guild = ctx.guild
         if role not in guild.roles:
@@ -46,6 +48,7 @@ class Administration(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def ban (self,ctx, member:discord.User=None, reason =None):
+        ''' Ban a member from the server '''
         if member == None or member == ctx.message.author:
             await ctx.channel.send("You cannot ban yourself")
             return
