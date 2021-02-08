@@ -9,6 +9,9 @@ import time
 IMAGGA_KEY = 'acc_21a00bb908a921c'
 IMMAGA_SECRET = 'd53d2e2aa574137d106da75aca37c743'
 
+def setup(bot):
+    bot.add_cog(Images(bot))
+
 class Images(commands.Cog):
 
     def __init__(self,bot):

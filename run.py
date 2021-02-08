@@ -4,13 +4,8 @@ import discord
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from discord.ext import commands
-from cogs.misc import Miscellaneous
-from cogs.ttt import TicTacToe
-from cogs.voice import VoiceChannels
-from cogs.admin import Administration
-from cogs.Random import Random
-from cogs.images import Images
-from cogs.help import HELP
+from cogwatch import Watcher
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
@@ -23,24 +18,29 @@ bot.remove_command('help')
 async def on_ready():
     print(f'Bot connected as {bot.user}')
     await bot.change_presence(activity=discord.Game(name="errors"))
+    # Watcher for changes in any files in the 'cogs' directory, If anything changes the bot reloads automatically!
+    watcher = Watcher(bot, path='cogs')
+    await watcher.start()
 
+@bot.event
+async def on_command_error(ctx,error):
+    # TODO: Add more isinstance statments for better error feedback.
+    if isinstance(error,commands.NoPrivateMessage):
+        await ctx.send("This command can only be used in a server!")
+    elif isinstance(error, commands.CommandNotFound):
+        await ctx.send("No such command. use !help for a list of commands")
+    else:
+        print(error.__cause__,"asdf")
+        
 
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
 
-@bot.event
-async def on_command_error(ctx,error):
-    if isinstance(error,commands.NoPrivateMessage):
-        await ctx.send("This command can only be used in a server!")
-    else:
-        print(error.__cause__)
-        
-bot.add_cog(Images(bot))
-bot.add_cog(Miscellaneous(bot))
-bot.add_cog(TicTacToe(bot))
-bot.add_cog(Administration(bot))
-bot.add_cog(VoiceChannels(bot))
-bot.add_cog(Random(bot))
-bot.add_cog(HELP(bot))
+
+for filename in os.listdir('./cogs'):
+  if filename.endswith('.py'):
+    # Instead of mentioning each cog one by one, loop through all python files in directory and add a cog if exists
+    bot.load_extension(f'cogs.{filename[:-3]}')
+
 bot.run(TOKEN)

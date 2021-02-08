@@ -5,10 +5,16 @@ from string import printable
 import os
 import platform
 OPEN_WEATHER_MAP_KEY = 'ea073e04bc85f31dab1408ad497f277f'
+
+def setup(bot):
+    bot.add_cog(Miscellaneous(bot))
+
 class Miscellaneous(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
+
+
 
     @commands.command(name="meme")
     async def meme(self,ctx):

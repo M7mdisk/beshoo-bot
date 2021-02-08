@@ -14,6 +14,9 @@ winningConditions = [
     [2, 4, 6]
 ]
 
+def setup(bot):
+    bot.add_cog(TicTacToe(bot))
+
 class TicTacToe(commands.Cog):
 
     def __init__(self,bot):

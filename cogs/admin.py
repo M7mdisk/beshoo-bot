@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from discord import Permissions
 
+def setup(bot):
+    bot.add_cog(Administration(bot))
 
 class Administration(commands.Cog):
 

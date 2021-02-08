@@ -10,6 +10,9 @@ from discord.ext.commands import cog
 import random
 from itertools import count
 
+def setup(bot):
+    bot.add_cog(VoiceChannels(bot))
+
 class VoiceChannels(commands.Cog):
 
     def __init__(self, bot):
@@ -72,7 +75,7 @@ class VoiceChannels(commands.Cog):
         self.voice.source = discord.PCMVolumeTransformer(self.voice.source)
         self.voice.source.volume = 0.07
 
-        self.nname = Name.rsplit("-", 2)
+        self.nname = name.rsplit("-", 2)
         await ctx.send(f"Playing: {self.nname[0]}")
         print("playing\n")
 
