@@ -1,4 +1,4 @@
-**efic-bot** *(shoud be changed)*
+**llic-bot** *(shoud be changed)*
 ============
 
 Who are we?
