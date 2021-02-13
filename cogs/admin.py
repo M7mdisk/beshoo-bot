@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import Permissions
+import asyncio
 
 def setup(bot):
     bot.add_cog(Administration(bot))
@@ -68,4 +69,14 @@ class Administration(commands.Cog):
         elif isinstance(error, commands.BadArgument):
             await ctx.send("That is not a valid member") 
 
-    
+
+
+
+
+    @commands.command(name = "clear")
+    async def clear(self, ctx, amount=10):
+        ''' Clear chat messages (Admins Only) '''
+        await ctx.channel.purge(limit=amount)
+        msg = await ctx.channel.send(f"{amount} messages deleted!")
+        await asyncio.sleep(2)
+        await msg.delete()
