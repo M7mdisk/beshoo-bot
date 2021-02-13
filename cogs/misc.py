@@ -1,4 +1,5 @@
 import discord
+from discord import colour
 import requests
 from discord.ext import commands
 from string import printable
@@ -118,4 +119,24 @@ class Miscellaneous(commands.Cog):
         if platform.system() == "Linux":
             embed.add_field(name="Temperature", value=f"{temp[:-1]}°c", inline=True)
         await ctx.send(embed=embed)
+
+
+    @commands.command(name = "avatar")
+    async def avatar(self, ctx, avamember : discord.Member=None):
+        ''' Show the users Avatar '''
+
+        embed = discord.Embed(colour = discord.Colour.orange())
+        if not avamember:
+            avamember = ctx.author
+        embed.set_author(name=f"{avamember}", icon_url=avamember.avatar_url)
+        userAvatarUrl = avamember.avatar_url
+        embed.set_image(url = f"{userAvatarUrl}")
+        embed.set_footer(text=f"requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=embed)
     
+    @commands.command()
+    async def slap(self, ctx, members: commands.Greedy[discord.Member], *, reason='no reason'):
+        ''' Slap any user you want to punish :3 '''
+        slapped = ", ".join(x.name for x in members)
+        await ctx.send('{} just got slapped for {}'.format(slapped, reason))
+
