@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import discord
 import requests
 from discord.ext import commands
@@ -5,9 +7,10 @@ from PIL import Image
 from io import BytesIO
 import time
 
+load_dotenv()
+IMAGGA_KEY = os.getenv('IMAGGA_KEY')
+IMMAGA_SECRET = os.getenv('IMMAGA_SECRET') 
 
-IMAGGA_KEY = 'acc_21a00bb908a921c'
-IMMAGA_SECRET = 'd53d2e2aa574137d106da75aca37c743'
 
 def setup(bot):
     bot.add_cog(Images(bot))
@@ -46,7 +49,7 @@ class Images(commands.Cog):
         for i,face in  enumerate(data["result"]["faces"]):
             embed=discord.Embed(color=0x00ff00)
             coords=face["coordinates"]
-            thumb = f"https://crop-api.herokuapp.com/crop/?url={ctx.message.attachments[0].url}&xmin={coords['xmin']}&ymin={coords['ymin']}&xmax={coords['xmax']}&ymax={coords['ymax']}"
+            thumb = f"https://crop-api.herokuapp.com/crop?url={ctx.message.attachments[0].url}&xmin={coords['xmin']}&ymin={coords['ymin']}&xmax={coords['xmax']}&ymax={coords['ymax']}"
             embed.set_thumbnail(url=thumb)
             embed.add_field(name=f"Face #{i+1}/{n}", value=f"{round(face['confidence'],1)}% confident", inline=False)
             for attribute in face["attributes"]:

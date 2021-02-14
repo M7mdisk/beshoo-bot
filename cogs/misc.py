@@ -1,11 +1,14 @@
+import os
+from dotenv import load_dotenv
 import discord
 from discord import colour
 import requests
 from discord.ext import commands
 from string import printable
-import os
 import platform
-OPEN_WEATHER_MAP_KEY = 'ea073e04bc85f31dab1408ad497f277f'
+
+load_dotenv()
+OPEN_WEATHER_MAP_KEY = os.getenv('OPEN_WEATHER_MAP_KEY')
 
 def setup(bot):
     bot.add_cog(Miscellaneous(bot))

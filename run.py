@@ -17,7 +17,7 @@ bot.remove_command('help')
 @bot.event
 async def on_ready():
     print(f'Bot connected as {bot.user}')
-    await bot.change_presence(activity=discord.Game(name="errors"))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="my developers struggle :)"))
     # Watcher for changes in any files in the 'cogs' directory, If anything changes the bot reloads automatically!
     watcher = Watcher(bot, path='cogs')
     await watcher.start()

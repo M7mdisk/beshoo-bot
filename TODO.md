@@ -2,7 +2,7 @@
 
 ## IMPORTANT.
 
-- [ ] Put api keys in enviroment/config file so they are not on github.
+- [✅] Put api keys in enviroment/config file so they are not on github.
     - [ ] Make sure to delete past commits that have keys 
 
 ## General improvements and bug fixes.
