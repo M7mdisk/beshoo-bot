@@ -80,3 +80,11 @@ class Administration(commands.Cog):
         msg = await ctx.channel.send(f"{amount} messages deleted!")
         await asyncio.sleep(2)
         await msg.delete()
+
+
+
+    @commands.command(name="dm")
+    async def send_dm(self, ctx, member: discord.Member, content):
+        ''' Sends a message to a user in his DMs '''
+        channel = await member.create_dm()
+        await channel.send(content)
