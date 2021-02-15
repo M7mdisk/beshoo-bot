@@ -3,7 +3,6 @@ from discord import embeds
 from discord.ext import commands
 from os import name
 from discord.ext.commands import cog
-import aiohttp
 import requests
 
 def setup(bot):
