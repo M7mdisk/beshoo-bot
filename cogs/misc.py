@@ -114,13 +114,8 @@ class Miscellaneous(commands.Cog):
     @commands.command()
     async def ping(self,ctx):
         '''Check the bot's ping'''
-        if platform.system() == "Linux":
-            stream = os.popen(r"vcgencmd measure_temp | egrep -o '[0-9]*\.[0-9]*'")
-            temp = stream.read()
         embed=discord.Embed(title="Pong!", color=0x00ff1e)
         embed.add_field(name="Latency", value=f"{round(self.bot.latency,1)}ms", inline=False)
-        if platform.system() == "Linux":
-            embed.add_field(name="Temperature", value=f"{temp[:-1]}°c", inline=True)
         await ctx.send(embed=embed)
 
 
