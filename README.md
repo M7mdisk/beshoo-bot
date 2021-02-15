@@ -76,6 +76,8 @@ and you're good to go!
   * `!kick [user] [reason]` Kick user.
   * `!ban [user] [reason]` ban user.
   * `!mute [user] [time]` mute user for a period of time.
+  * `!clear [amount=10]` Clear number of messages in a channel.
+  * `!dm <@user> [content]` Sends a message to a user in his DMs through the bot
 
 ## Contributions
 
