@@ -74,7 +74,6 @@ class Help(commands.Cog):
                     alias = c.name if not parent else parent + ' ' + c.name
                 name = f"{self.bot.command_prefix}{alias} {c.signature}"
                 desc = c.help if c.help else "\u200c"
-                print(f"* `{name.strip()}`  {desc}.")
                 embed.add_field(name=name, value=desc, inline=False)
             embeds.append(embed)
 
