@@ -30,7 +30,7 @@ async def on_command_error(ctx,error):
     elif isinstance(error, commands.CommandNotFound):
         await ctx.send("No such command. use !help for a list of commands")
     else:
-        print(error.__cause__,"asdf")
+        print(error,error.__cause__)
         
 
 @bot.event
