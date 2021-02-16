@@ -1,4 +1,4 @@
-# 🤖 Beshoo Bot 
+# 🤖 Beshoo Bot ![website](https://img.shields.io/website?down_color=red&down_message=Sleep&label=Status&up_color=Green&up_message=Awake&url=https%3A%2F%2Fdashboard.heroku.com%2Fapps%2Fbeshoo)
 Beshoo is a multi-purpouse discord bot built with discord.py
 
 The goal of the bot was simply to learn more about how to work with requests, APIs and python in general.
