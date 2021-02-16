@@ -96,7 +96,7 @@ class Administration(commands.Cog):
         await channel.send(content)
 
 
-    @commands.command()
+    @commands.command(name="prefixset")
     @command.guild_only()
     async def setprefix(self, ctx, *, prefixes = ""):
         custom_prefixes[ctx.guild.id] = prefixes.split() or default_prefixes
