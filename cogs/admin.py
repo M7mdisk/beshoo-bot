@@ -93,3 +93,4 @@ class Administration(commands.Cog):
         ''' Sends a message to a user in his DMs '''
         channel = await member.create_dm()
         await channel.send(content)
+        await channel.send(content)
