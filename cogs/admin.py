@@ -2,9 +2,8 @@ import discord
 from discord.ext import commands
 from discord import Permissions
 import asyncio
+
 from discord.ext.commands.core import command
-
-
 
 def setup(bot):
     bot.add_cog(Administration(bot))
@@ -93,4 +92,5 @@ class Administration(commands.Cog):
         ''' Sends a message to a user in his DMs '''
         channel = await member.create_dm()
         await channel.send(content)
-        await channel.send(content)
+
+
