@@ -8,9 +8,7 @@ from discord.ext.commands.core import command
 def setup(bot):
     bot.add_cog(Administration(bot))
 
-custom_prefixes = {}
 
-default_prefixes = ['!']
 
 class Administration(commands.Cog):
 
@@ -96,8 +94,3 @@ class Administration(commands.Cog):
         await channel.send(content)
 
 
-    @commands.command(name="prefixset")
-    @command.guild_only()
-    async def setprefix(self, ctx, *, prefixes = ""):
-        custom_prefixes[ctx.guild.id] = prefixes.split() or default_prefixes
-        await ctx.send("Prefixes set!")

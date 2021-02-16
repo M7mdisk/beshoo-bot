@@ -12,8 +12,6 @@ intents = discord.Intents.default()
 intents.members = True
 bot= Bot(command_prefix = '!',intents=intents)
 bot.remove_command('help')
-custom_prefixes = {}
-default_prefixes = ['!']
 
 
 @bot.event
@@ -46,13 +44,6 @@ for filename in os.listdir('./cogs'):
     bot.load_extension(f'cogs.{filename[:-3]}')
 
 
-async def determine_prefix(self, bot, message):
-    guild = message.guild
-
-    if guild:
-        return custom_prefixes
-    else:
-        return default_prefixes
 
 bot.run(TOKEN)
 
