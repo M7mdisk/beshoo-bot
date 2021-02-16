@@ -43,6 +43,8 @@ for filename in os.listdir('./cogs'):
     # Instead of mentioning each cog one by one, loop through all python files in directory and add a cog if exists
     bot.load_extension(f'cogs.{filename[:-3]}')
 
+
+
 bot.run(TOKEN)
 
 
