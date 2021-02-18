@@ -48,7 +48,7 @@ class Miscellaneous(commands.Cog):
         '''Generate random lief advice'''
         r = requests.get("https://api.adviceslip.com/advice")
         data = r.json()
-        await (data["slip"]["advice"])
+        await ctx.send(data["slip"]["advice"])
 
     @commands.command()
     async def echo(self,ctx, *args):
