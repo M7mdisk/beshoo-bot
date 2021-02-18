@@ -79,6 +79,7 @@ class Administration(commands.Cog):
 
 
     @commands.command(name = "clear")
+    @commands.has_permissions(administrator=True)
     async def clear(self, ctx, amount=10):
         ''' Clear chat messages (Admins Only) '''
         await ctx.channel.purge(limit=amount)
@@ -89,8 +90,11 @@ class Administration(commands.Cog):
 
 
     @commands.command(name="dm")
+    @commands.has_permissions(administrator=True)
     async def send_dm(self, ctx, member: discord.Member, content):
         ''' Sends a message to a user in his DMs '''
         channel = await member.create_dm()
         await channel.send(content)
-        await channel.send(content)
+        msg = await ctx.channel.send("Message sent..")
+        await asyncio.sleep(2)
+        await msg.delete()
