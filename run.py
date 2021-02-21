@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import discord
+import json
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from discord.ext import commands
@@ -10,8 +11,53 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
-bot= Bot(command_prefix = '!',intents=intents)
+def get_prefix(bot, message):
+    # read the json file
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    return prefixes[str(message.guild.id)]
+bot= Bot(command_prefix = get_prefix,intents=intents)
 bot.remove_command('help')
+
+@bot.event
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+        print(prefixes)
+    
+    prefixes[str(guild.id)] = '!'
+
+    # return this info to the json file
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+        print(prefixes)
+
+@bot.event
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    prefixes.pop(str(guild.id))
+    print(prefixes)
+
+    # update the info of the file
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+        print(prefixes)
+
+@bot.command()
+async def setprefix(ctx, prefix):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+        print(prefixes)
+    
+    prefixes[str(ctx.guild.id)] = prefix
+
+    # return this info to the json file
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+        print(prefixes)
+
+    await ctx.send(f"prefix changed to: {prefix}")
 
 
 @bot.event
