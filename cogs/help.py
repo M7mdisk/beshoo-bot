@@ -5,7 +5,7 @@ from discord.embeds import Embed
 from discord.ext import commands
 import time
 
-from requests import __title__
+import requests 
 
 def setup(bot):
     bot.add_cog(Help(bot))
@@ -35,7 +35,8 @@ class Help(commands.Cog):
                     alias = fmt
                 else:
                     alias = c.name if not parent else parent + ' ' + c.name
-                name = f"{self.bot.command_prefix}{alias} {c.signature}"
+                prefix = requests.get(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers/{str(ctx.guild.id)}.json").json()
+                name = f"{prefix}{alias} {c.signature}"
                 embed.add_field(name=name, value=c.help, inline=False)
 
                 return await ctx.send(embed=embed)
@@ -72,7 +73,9 @@ class Help(commands.Cog):
                     alias = fmt
                 else:
                     alias = c.name if not parent else parent + ' ' + c.name
-                name = f"{self.bot.command_prefix}{alias} {c.signature}"
+                prefix = requests.get(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers/{str(ctx.guild.id)}.json").json()
+
+                name = f"{prefix}{alias} {c.signature}"
                 desc = c.help if c.help else "\u200c"
                 embed.add_field(name=name, value=desc, inline=False)
             embeds.append(embed)

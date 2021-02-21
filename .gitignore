@@ -4,3 +4,4 @@ __pycache__/
 *.mp3
 run2.py
 prefixes.json
+cache.sqlite

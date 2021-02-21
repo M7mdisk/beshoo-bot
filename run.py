@@ -1,61 +1,42 @@
 #!/usr/bin/env python3
 import os
 import discord
+import requests
 import json
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from discord.ext import commands
 from cogwatch import Watcher
+import requests_cache
 
+requests_cache.install_cache()
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
+
 def get_prefix(bot, message):
     # read the json file
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-    return prefixes[str(message.guild.id)]
+    r = requests.get(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers/{str(message.guild.id)}.json").json()
+    if r == None:
+        prefix = "!"
+        p = requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(message.guild.id): "!"}))
+        requests_cache.clear()
+    else:
+        prefix = r
+    return prefix 
+
 bot= Bot(command_prefix = get_prefix,intents=intents)
 bot.remove_command('help')
 
 @bot.event
 async def on_guild_join(guild):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-        print(prefixes)
-    
-    prefixes[str(guild.id)] = '!'
-
-    # return this info to the json file
-    with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
-        print(prefixes)
-
-@bot.event
-async def on_guild_remove(guild):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-    prefixes.pop(str(guild.id))
-    print(prefixes)
-
-    # update the info of the file
-    with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
-        print(prefixes)
+    requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(guild.id): "!"}))
 
 @bot.command()
 async def setprefix(ctx, prefix):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-        print(prefixes)
-    
-    prefixes[str(ctx.guild.id)] = prefix
-
-    # return this info to the json file
-    with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
-        print(prefixes)
+    requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(ctx.guild.id): f"{prefix}"}))
+    requests_cache.clear()
 
     await ctx.send(f"prefix changed to: {prefix}")
 
