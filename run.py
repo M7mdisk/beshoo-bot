@@ -34,6 +34,7 @@ async def on_guild_join(guild):
     requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(guild.id): "!"}))
 
 @bot.command()
+@guild_only()
 async def setprefix(ctx, prefix):
     requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(ctx.guild.id): f"{prefix}"}))
     requests_cache.clear()
