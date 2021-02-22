@@ -17,7 +17,9 @@ intents = discord.Intents.default()
 intents.members = True
 
 def get_prefix(bot, message):
-    # read the json file
+    guild = message.guild
+    if not guild:
+        return "!"
     r = requests.get(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers/{str(message.guild.id)}.json").json()
     if r == None:
         prefix = "!"
