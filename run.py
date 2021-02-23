@@ -16,6 +16,13 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 
+def when_mentioned_or_function(func):
+    def inner(bot, message):
+        r = func(bot, message)
+        r = commands.when_mentioned(bot, msg) + r
+        return r
+    return inner
+
 def get_prefix(bot, message):
     guild = message.guild
     if not guild:
@@ -29,7 +36,7 @@ def get_prefix(bot, message):
         prefix = r
     return prefix 
 
-bot= Bot(command_prefix = get_prefix,intents=intents)
+bot= Bot(command_prefix = when_mentioned_or_function(get_prefix),intents=intents)
 bot.remove_command('help')
 
 @bot.event
