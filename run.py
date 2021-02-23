@@ -4,7 +4,7 @@ import discord
 import requests
 import json
 from dotenv import load_dotenv
-from discord.ext.commands import Bot
+from discord.ext.commands import Bot,when_mentioned_or
 from discord.ext import commands
 from cogwatch import Watcher
 import requests_cache
@@ -19,7 +19,7 @@ intents.members = True
 def when_mentioned_or_function(func):
     def inner(bot, message):
         r = func(bot, message)
-        r = commands.when_mentioned(bot, msg) + r
+        r = commands.when_mentioned(bot, message) + [r]
         return r
     return inner
 
