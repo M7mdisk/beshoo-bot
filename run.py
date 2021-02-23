@@ -73,6 +73,8 @@ async def on_command_error(ctx,error):
 
 @bot.event
 async def on_message(message):
+    if bot.user.mentioned_in(message) and 'prefix' in message.content:
+        return await message.channel.send( f'My Prefix on this server is {get_prefix(bot,message)}')
     await bot.process_commands(message)
 
 
