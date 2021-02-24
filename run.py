@@ -7,10 +7,8 @@ from dotenv import load_dotenv
 from discord.ext.commands import Bot,when_mentioned_or
 from discord.ext import commands
 from cogwatch import Watcher
-import requests_cache
 from discord.ext import commands
 
-requests_cache.install_cache()
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.default()
@@ -30,8 +28,7 @@ def get_prefix(bot, message):
     r = requests.get(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers/{str(message.guild.id)}.json").json()
     if r == None:
         prefix = "!"
-        p = requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(message.guild.id): "!"}))
-        requests_cache.clear()
+        requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(message.guild.id): "!"}))
     else:
         prefix = r
     return prefix 
@@ -47,8 +44,6 @@ async def on_guild_join(guild):
 @commands.guild_only()
 async def setprefix(ctx, prefix):
     requests.patch(f"https://beshoo-188b1-default-rtdb.firebaseio.com/Servers.json",json.dumps({str(ctx.guild.id): f"{prefix}"}))
-    requests_cache.clear()
-
     await ctx.send(f"prefix changed to: {prefix}")
 
 
